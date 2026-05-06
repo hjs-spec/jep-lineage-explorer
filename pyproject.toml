@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jep-lineage-explorer"
+version = "0.1.0"
+description = "Replayable Delegation Lineage Explorer for JEP archives"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "JEP Lineage Explorer Contributors" }]
+license = { text = "MIT" }
+keywords = ["jep", "delegation", "lineage", "replay", "authority"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+
+[project.scripts]
+jep-lineage = "jep_lineage.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
