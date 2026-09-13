@@ -48,7 +48,7 @@ def render_text(report: LineageReport) -> str:
     if not roots:
         lines.append("(no delegations discovered)")
     for root in roots:
-        _render_delegation(report, root.delegation_id, lines, depth=0)
+        _render_delegation(report, (root.replay_id, root.delegation_id), lines, depth=0)
 
     lines.append("")
     lines.append("Replay Lineage Graph")
@@ -92,7 +92,12 @@ def render_text(report: LineageReport) -> str:
     return "\n".join(lines)
 
 
-def _render_delegation(report: LineageReport, delegation_id: str, lines: list[str], depth: int) -> None:
+def _render_delegation(report: LineageReport, delegation_id: tuple[str, str], lines: list[str], depth: int, visited=None) -> None:
+    visited = set() if visited is None else set(visited)
+    if delegation_id in visited:
+        lines.append("  " * depth + "[delegation cycle]")
+        return
+    visited.add(delegation_id)
     delegation = report.delegations[delegation_id]
     indent = "  " * depth
     scopes = ",".join(sorted(delegation.scopes)) if delegation.scopes else "<no-scope>"
@@ -100,7 +105,7 @@ def _render_delegation(report: LineageReport, delegation_id: str, lines: list[st
     revoked = f", revoked={delegation.revoked_at.isoformat()}" if delegation.revoked_at else ""
     lines.append(f"{indent}- {delegation.delegation_id}: {delegation.delegator} -> {delegation.delegatee} scopes={scopes}{expires}{revoked}")
     for child_id in sorted(delegation.children, key=lambda child: report.delegations[child].source_line):
-        _render_delegation(report, child_id, lines, depth + 1)
+        _render_delegation(report, child_id, lines, depth + 1, visited)
 
 
 if __name__ == "__main__":

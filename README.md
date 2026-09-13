@@ -78,3 +78,7 @@ The inspector validates that:
 {"event_type":"delegation_created","timestamp":"2026-01-01T01:00:00Z","replay_id":"r1","delegation_id":"child","parent_delegation_id":"root","from_agent":"planner","to_agent":"worker","scopes":["read"],"expires_at":"2026-01-01T12:00:00Z"}
 {"event_type":"authority_used","timestamp":"2026-01-01T02:00:00Z","replay_id":"r1","agent":"worker","delegation_id":"child","scopes":["read"]}
 ```
+
+## Runtime and verification notes
+
+See [HARDENING.md](HARDENING.md) for supported behavior, regression checks, and compatibility boundaries.

@@ -63,7 +63,7 @@ class ReplayEvent:
         )
         replay_id = str(payload.get("replay_id") or payload.get("run_id") or payload.get("session_id") or "default")
         actor = payload.get("actor") or payload.get("agent") or payload.get("agent_id")
-        timestamp = parse_time(payload.get("timestamp") or payload.get("time") or payload.get("ts"))
+        timestamp = parse_time(next((payload[k] for k in ("timestamp", "time", "ts") if k in payload), None))
         return cls(line_no=line_no, event_type=event_type, timestamp=timestamp, replay_id=replay_id, actor=str(actor) if actor else None, payload=payload)
 
 
@@ -83,15 +83,15 @@ class Delegation:
     source_event: ReplayEvent
     revoked_at: datetime | None = None
     uses: list[ReplayEvent] = field(default_factory=list)
-    children: list[str] = field(default_factory=list)
+    children: list[tuple[str, str]] = field(default_factory=list)
 
     @property
     def is_root(self) -> bool:
         return self.parent_id is None
 
     def active_at(self, moment: datetime | None) -> bool:
-        if moment is None:
-            return True
+        if moment is None or self.issued_at is None:
+            return False
         if self.issued_at and moment < self.issued_at:
             return False
         if self.revoked_at and moment >= self.revoked_at:
