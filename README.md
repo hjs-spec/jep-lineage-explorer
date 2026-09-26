@@ -1,5 +1,14 @@
 # jep-lineage-explorer
 
+> **Maintenance: retired experiment — 2026-09-26.** Active feature development
+> has ended. Source history, releases, examples and existing archive readers are
+> retained for reproduction. Package names and historical formats are unchanged.
+
+The local delegation model, scope checks and CLI remain available here. Core signatures do not establish the authority asserted by this model; retain this reader for existing lineage archives.
+
+For new signed Core integrations, use the [maintained recording and report path](https://github.com/hjs-spec/jep-agent-sdk/blob/main/docs/INTEGRATIONS.md).
+See the [repository directory](https://github.com/hjs-spec/.github/blob/main/PROJECTS.md#retired-experiments) for maintenance status. No automatic archive migration is provided.
+
 Inspect declared delegation relationships and local scope rules in JSONL records.
 
 **No cryptographic verification is performed.** Findings concern the supplied local delegation model; they do not establish signer identity or real-world authority. A Core event requires an explicit application mapping into the fields below. See the [format matrix](https://github.com/hjs-spec/jep-core/blob/main/docs/architecture/architecture-notes.md#format-and-verification-matrix).
