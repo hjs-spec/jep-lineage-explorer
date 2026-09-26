@@ -1,8 +1,10 @@
 # jep-lineage-explorer
 
-Explore replayable delegation lineage and authority propagation across AI agents and tools.
+Inspect declared delegation relationships and local scope rules in JSONL records.
 
-`jep-lineage-explorer` turns a JEP replay archive (`.jsonl`) into inspectable authority artifacts:
+**No cryptographic verification is performed.** Findings concern the supplied local delegation model; they do not establish signer identity or real-world authority. A Core event requires an explicit application mapping into the fields below. See the [format matrix](https://github.com/hjs-spec/jep-core/blob/main/docs/architecture/architecture-notes.md#format-and-verification-matrix).
+
+`jep-lineage-explorer` turns a supported local replay archive (`.jsonl`) into inspectable delegation reports:
 
 - delegation tree for authority propagation and nested delegation
 - replay lineage graph for agent-to-agent responsibility chains
@@ -34,7 +36,7 @@ jep-lineage inspect archive.jsonl --strict
 
 ## Supported JSONL event shapes
 
-The reader accepts flexible field names so existing JEP archives can be replayed without a rigid schema.
+The reader accepts flexible field names for the local delegation format below. This is not a universal JEP Core decoder.
 
 Delegation creation event types include `delegation_created`, `delegate`, `authority_delegated`, and `authority_granted`.
 
